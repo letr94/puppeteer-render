@@ -1,10 +1,20 @@
 const { response } = require("express");
 const puppeteer = require("puppeteer");
+require("dotenv").config();
+
 const scrapeLogic = async (res) => {
 
       
     // Launch the browser and open a new blank page
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args:[
+            "--disable-setuid-sandbox",
+            "--single-process",
+            "--no-sandbox",
+            "--no-zygote"
+        ],
+    executablePath: process.env.NODE_ENV==='production'?process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath,
+});
     try{
    
         throw new Error("whopps");
